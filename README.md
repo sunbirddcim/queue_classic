@@ -301,7 +301,7 @@ https://groups.google.com/d/forum/queue_classic
 ### Dependencies
 
 * Ruby 1.9.2
-* Postgres ~> 9.0
+* Postgres ~> 9.5
 * Rubygem: pg ~> 0.11.0
 * For JRuby, see [queue_classic_java](https://github.com/bdon/queue_classic_java)
 
