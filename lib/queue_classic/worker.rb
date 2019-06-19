@@ -15,7 +15,6 @@ module QC
     # connection:: PG::Connection object.
     # q_name:: Name of a single queue to process.
     # q_names:: Names of queues to process. Will process left to right.
-    # top_bound:: Offset to the head of the queue. 1 == strict FIFO.
     def initialize(args={})
       @fork_worker = args[:fork_worker] || QC.fork_worker?
       @wait_interval = args[:wait_interval] || QC.wait_time
@@ -28,8 +27,7 @@ module QC
 
       @queues = setup_queues(@conn_adapter,
         (args[:q_name] || QC.queue),
-        (args[:q_names] || QC.queues),
-        (args[:top_bound] || QC.top_bound))
+        (args[:q_names] || QC.queues))
       log(args.merge(:at => "worker_initialized"))
       @running = true
     end
@@ -153,10 +151,10 @@ module QC
 
     private
 
-    def setup_queues(adapter, queue, queues, top_bound)
+    def setup_queues(adapter, queue, queues)
       names = queues.length > 0 ? queues : [queue]
       names.map do |name|
-        QC::Queue.new(name, top_bound).tap do |q|
+        QC::Queue.new(name).tap do |q|
           q.conn_adapter = adapter
         end
       end

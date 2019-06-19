@@ -12,7 +12,6 @@ module QC
     :TABLE_NAME => :table_name,
     :QUEUE => :queue,
     :QUEUES => :queues,
-    :TOP_BOUND => :top_bound,
     :FORK_WORKER => :fork_worker?,
   }
 
