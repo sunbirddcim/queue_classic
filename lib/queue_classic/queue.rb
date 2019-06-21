@@ -6,10 +6,9 @@ module QC
   # The queue class maps a queue abstraction onto a database table.
   class Queue
 
-    attr_reader :name, :top_bound
-    def initialize(name, top_bound=nil)
+    attr_reader :name
+    def initialize(name)
       @name = name
-      @top_bound = top_bound || QC.top_bound
     end
 
     def conn_adapter=(a)
@@ -70,8 +69,8 @@ module QC
 
     def lock
       QC.log_yield(:measure => 'queue.lock') do
-        s = "SELECT * FROM lock_head($1, $2)"
-        if r = conn_adapter.execute(s, name, top_bound)
+        s = "SELECT * FROM lock_head($1)"
+        if r = conn_adapter.execute(s, name)
           {}.tap do |job|
             job[:id] = r["id"]
             job[:q_name] = r["q_name"]

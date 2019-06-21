@@ -41,12 +41,6 @@ module QC
       @queues ||= (ENV["QUEUES"] && ENV["QUEUES"].split(",").map(&:strip)) || []
     end
 
-    # Set this to 1 for strict FIFO.
-    # There is nothing special about 9....
-    def top_bound
-      @top_bound ||= (ENV["QC_TOP_BOUND"] || 9).to_i
-    end
-
     # Set this variable if you wish for
     # the worker to fork a UNIX process for
     # each locked job. Remember to re-establish

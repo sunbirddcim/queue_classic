@@ -67,16 +67,6 @@ class ConfigTest < QCTest
     end
   end
 
-  def test_top_bound_default
-    assert_equal 9, QC.top_bound
-  end
-
-  def test_configure_top_bound_with_env_var
-    with_env "QC_TOP_BOUND" => "5" do
-      assert_equal 5, QC.top_bound
-    end
-  end
-
   def test_fork_worker_default
     refute QC.fork_worker?
   end
